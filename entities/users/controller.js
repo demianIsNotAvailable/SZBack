@@ -1,7 +1,8 @@
 import { User } from "./model.js";
 import config from "../../core/config.js";
-import { Jwt } from "jsonwebtoken";
+import Jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { Role } from "./roles/model.js";
 
 export const createUser = async (data) => {
   const reg = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -27,3 +28,13 @@ export const deleteUser = async (id) => {
 export const listUsers = async () => {
   return await User.find({});
 };
+
+
+export const findRoles = async () => {
+  return await Role.find({})
+}
+
+export const createRoles = async (data) => {
+  
+  return await Role.create(data)
+}

@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import config from "./core/config.js";
+import userRouter from "./entities/users/router.js"
 
 
 const app = express();
@@ -22,6 +23,6 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
-
-app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`))
+app.use('/', userRouter)
+app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`)) 
 

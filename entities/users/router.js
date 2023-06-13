@@ -1,10 +1,9 @@
 import express from 'express';
-import UserController from './UserController';
-import { createUser, deleteUser, getUser, listUsers, updateUser } from './controller';
+import { createUser, deleteUser, getUser, listUsers, updateUser, findRoles, createRoles } from './controller.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try {
         res.json(await createUser(req.body))
     } catch(e) {
@@ -13,7 +12,9 @@ router.post('/', async (req, res) => {
 })
 
 
-router.get('/:id', async (req, res) => {
+
+
+router.get('/:id', async (req, res, next) => {
     try {
         res.json(await getUser(req.params.id))
     } catch(e) {
@@ -22,7 +23,7 @@ router.get('/:id', async (req, res) => {
 });
 
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
     try {
         res.json(await updateUser(req.params.id, req.body))
     } catch(e) {
@@ -31,7 +32,7 @@ router.put('/:id', async (req, res) => {
 });
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         res.json(await deleteUser(req.params.id))
     } catch(e) {
@@ -40,7 +41,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         res.json(await listUsers())
     } catch(e) {
@@ -48,3 +49,6 @@ router.get('/', async (req, res) => {
     }
 
 });
+
+
+export default router

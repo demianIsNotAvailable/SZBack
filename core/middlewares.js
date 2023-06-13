@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import {MongoServerError} from 'mongodb';
 import config from './config.js'
+import { Role } from "../entities/users/roles/model.js"
 
 
 export const auth = (req, res, next)=>{
@@ -24,4 +25,17 @@ export const errorHandler = (err, req, res, next) =>{
     if(err.message === 'INVALID_PASSWORD') return res.status(422).json({error: 'MISSING_DATA'})
     if(err instanceof MongoServerError && err.code === 11000) return res.status(422).json({error: 'DUPLICATE_ENTITY', entities: Object.keys(err.keyPattern)})
     return res.status(500).json({error: 'SERVER_ERROR', err})
+}
+
+
+export const roleCheck = async (requiredRole) => {
+    const roles = await Role.find({})
+    const roleIndex = roles.indexOf(requiredRole)
+    const allowedRoles = roles.slice(roleIndex)
+
+    return (req, res, next) => {
+        if (allowedRoles.includes(req.headers.token.role)) {
+            next()
+        } else next(`FORBIDDEN`)
+    }
 }

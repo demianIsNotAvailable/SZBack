@@ -9,6 +9,6 @@ export const Role = mongoose.model('Role', new mongoose.Schema({
     required: true,
     unique: true
   }
-}));
+}, { versionKey: false, timestamps: true }));
 
 
