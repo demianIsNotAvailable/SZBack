@@ -1,6 +1,6 @@
 import  express  from "express";
 import { auth } from "../../core/middlewares.js";
-import { Edition } from "./model.js";
+import { createEdition, listEditions, findEdition, updateEdition } from "./controller.js";
 
 const router = express.Router();
 
@@ -34,6 +34,14 @@ router.put('/:id', auth("ADMIN"), async (req, res, next) => {
     try {
         res.json(await updateEdition(req.params.id, data))
     } catch(e) {
+        next(e)
+    }
+})
+
+router.post('/:id', auth, async (req, res, next) => {
+    try {
+        res.json(await signUp(req.params,id, req.token.id))
+    } catch (e) {
         next(e)
     }
 })

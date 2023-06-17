@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+import { User } from "../users/model.js";
 import { Edition } from "./model.js";
 
 
@@ -29,4 +31,26 @@ export const findEdition = async (id) => {
 
 export const updateEdition = async (id, data) => {
     return await Edition.findOneAndUpdate(id, data)
+}
+
+
+export const joinEdition = async (editionId, userId) => {
+    const session = await mongoose.startSession();
+    try {
+        const user = await User.findById(userId).session(session)
+        const edition = await Event.findById(editionId).session(session)
+
+        user.events.push(edition._id)
+        edition.users.push(user._id)
+
+        await Promise.all([user.save(), edition.save()])
+        await session.commitTransaction()
+        session.endSession()
+
+        return (true)
+    } catch (e) {
+        session.abortTransaction()
+        session.endSession()
+        next(e)
+    }
 }
