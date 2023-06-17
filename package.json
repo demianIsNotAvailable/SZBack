@@ -6,6 +6,7 @@
   "main": "app.js",
   "scripts": {
 
+    "editionSeeder": "node -r dotenv-safe/config ./core/seeders/editionSeeder.js",
     "userSeeder": "node -r dotenv-safe/config ./core/seeders/userSeeder.js",
     "dbseed": "node -r dotenv-safe/config ./core/seeders/dbSeeder.js",
     "start": "node -r dotenv-safe/config app.js",

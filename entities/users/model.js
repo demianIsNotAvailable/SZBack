@@ -42,6 +42,7 @@ export const User = mongoose.model('User', new mongoose.Schema({
   events: {
     type: Array,
     default: [],
+    ref: 'Edition',
     select: false    
   }
 

@@ -17,7 +17,7 @@ export const Edition = mongoose.model('Edition', new mongoose.Schema({
     type: String,
     required: true
   },
-  eventType: {
+  type: {
     type: String,
     enum: ['SZ', '48h', 'Rojo', 'La Purga', 'Cazadores de Demonios', 'Juegos del Calamar', 'Otros'],
     required: true
@@ -28,6 +28,7 @@ export const Edition = mongoose.model('Edition', new mongoose.Schema({
   },
   users: [{
     type: String,
-    ref: 'User'
+    ref: 'User',
+    select: false
   }]
-}));
+}, { versionKey: false, timestamps: true }));
