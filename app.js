@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import config from "./core/config.js";
 import userRouter from "./entities/users/router.js"
+import editionRouter from "./entities/editions/router.js"
 
 
 const app = express();
@@ -22,6 +23,7 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use('/events', editionRouter)
 app.use('/', userRouter)
 app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`))  
 

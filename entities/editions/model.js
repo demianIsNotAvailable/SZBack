@@ -9,7 +9,7 @@ export const Edition = mongoose.model('Edition', new mongoose.Schema({
     type: Date,
     required: true
   },
-  timeOfDay: {
+  time: {
     type: String,
     required: true
   },
@@ -21,6 +21,10 @@ export const Edition = mongoose.model('Edition', new mongoose.Schema({
     type: String,
     enum: ['SZ', '48h', 'Rojo', 'La Purga', 'Cazadores de Demonios', 'Juegos del Calamar', 'Otros'],
     required: true
+  },
+  active: {
+    type: Boolean,
+    default: true
   },
   users: [{
     type: String,

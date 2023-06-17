@@ -49,8 +49,10 @@ export const updateUser = async (id, data) => {
   if (data.password) {
     const reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,30}$/;
     if (!reg.test(data.password)) throw new Error("INVALID_PASSWORD");
-  }
+  
   data.password = await bcrypt.hash(data.password, config.HASH_ROUNDS);
+  }
+  
   return await User.findByIdAndUpdate(id, data, { new: true });
 };
 
