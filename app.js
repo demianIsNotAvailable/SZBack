@@ -6,7 +6,6 @@ import userRouter from "./entities/users/router.js"
 
 
 const app = express();
-
 mongoose.connect(config.DB_URL)
     .then(()=> console.log(`Database up @ ${config.DB_URL}`))
     .catch((err) => console.error(`Failed to connect to database`, err))
@@ -24,5 +23,5 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/', userRouter)
-app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`)) 
+app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`))  
 

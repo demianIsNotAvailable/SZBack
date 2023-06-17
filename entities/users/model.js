@@ -4,7 +4,7 @@ export const User = mongoose.model('User', new mongoose.Schema({
   name: {
     type: String,
   },
-  lastName: {
+  lastname: {
     type: String,
   },
   email: {
@@ -14,9 +14,10 @@ export const User = mongoose.model('User', new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
-  birthDate: {
+  birthdate: {
     type: Date,
   },
   city: {
@@ -26,9 +27,9 @@ export const User = mongoose.model('User', new mongoose.Schema({
     type: String
   },
   role: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Role',
-    default: '648706ff52eef9a93a69750a'
+    type: String,
+    enum: ["GUEST", "USER", "VIP", "MOD", "ADMIN", "SUPERADMIN"],
+    default: 'GUEST'
   },
   verified: {
     type: Boolean,
@@ -38,11 +39,12 @@ export const User = mongoose.model('User', new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  dateOfCreation: {
-    type: Date,
-    required: true,
-    default: Date.now
+  events: {
+    type: Array,
+    default: [],
+    select: false    
   }
-}));
+
+}, { versionKey: false, timestamps: true }));
 
 
