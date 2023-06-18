@@ -21,28 +21,7 @@ const seedUsers = async (count) => {
     return await User.insertMany(users)
   }
 
-  const seedCharacters = async (count) => {
-    const userlist = await User.find({}, {name:1})
-    let chars = []
-    for (let i = 0; i < count; i++) {
-      const char = new CharacterData({
-        name: faker.person.name(),
-        user: faker.helpers.arrayElement(userlist)
-        //etc
-      })
-      chars.push(char)
-    }
-    return await chars.insertMany(chars)
-  }
-
-const bringUsers = async () => {
-  const userlist = await User.find({}, {name: 1})
-  return userlist
-}
-
-
 mongoose.connect(config.DB_URL)
     .then(() => console.log(`Database up @ ${config.DB_URL}`))
     .then(() => seedUsers(20))
-    .then(() => seedCharacters(20, bringUsers()))
     .catch((err) => console.error(`Failed to connect to database`, err))

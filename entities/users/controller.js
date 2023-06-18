@@ -1,3 +1,4 @@
+import express from "express"
 import { User } from "./model.js";
 import config from "../../core/config.js";
 import Jwt from "jsonwebtoken";
@@ -15,10 +16,10 @@ export const createUser = async (data) => {
 
 
 export const login = async (req) => {
-  const user = await User.findOne({ email: req.body.email }).select("+password").select('events');
+  const user = await User.findOne({ email: req.body.email }).select("+password +events");
   if (!user || !(await bcrypt.compare(req.body.password, user.password)))
     throw new Error("INVALID_CREDENTIALS")
-  const token = Jwt.sign({id: user._id, role: user.role, email: user.email, editions: user.events }, config.SECRET)
+  const token = Jwt.sign({id: user._id, email: user.email, editions: user.events, role: user.role }, config.SECRET)
   return {token}
 }
 
@@ -28,7 +29,8 @@ export const findUserById = async (id) => {
 };
 
 
-export const listUsers = async (username, page = 1, limit = 2) => {
+// por defecto devuelve todos los usuarios paginando de 10 en 10, pero acepta filtrado por nombre, apellido e email y configuración de paginación.
+export const listUsers = async (username, page = 1, limit = 10) => {
   const reg = new RegExp(username, 'i')
   return User.find({
       $or: [

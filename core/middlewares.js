@@ -1,8 +1,11 @@
+import express from "express"
 import jwt from 'jsonwebtoken';
 import {MongoServerError} from 'mongodb';
 import config from './config.js'
 
 
+
+// auth extendido, recibe como argumento opcional un rol en cuyo caso funciona además como un rolecheck
 export const auth = (roleRequired = "GUEST") => {
     return (req, res, next) => {        
 
@@ -16,6 +19,9 @@ export const auth = (roleRequired = "GUEST") => {
         } catch(e){        
             return next(new Error('INVALID_TOKEN'));
         }
+
+        // si recibe un rol, entra al condicional, filtra los roles que tienen permisos iguales o superiors a los requeridos, 
+        // y comprueba si el del usuario está entre ellos
         if (roleRequired !== "GUEST") {
             const roles = ["USER", "VIP", "MOD", "ADMIN", "SUPERADMIN"]
             const roleIndex = roles.indexOf(roleRequired)

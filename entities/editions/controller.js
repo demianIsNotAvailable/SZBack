@@ -13,6 +13,8 @@ export const createEdition = async (data) => {
 }
 
 
+
+// por defecto devuelve todos los eventos, pero puedes filtrar dinámicamente por fechas, localizaciones y si como usuario estás apuntado.
 export const listEditions = async (start = "", end = "", location = "", headers) => {
     const filter = { active: true }
 
@@ -43,7 +45,7 @@ export const updateEdition = async (id, data) => {
     return Edition.findOneAndUpdate(id, data)
 }
 
-
+// ternaria que te apunta al evento si no estás apuntado, y te borra si ya lo estás.
 export const joinEdition = async (editionId, userId) => {
 
         const user = await User.findById(userId).select('events')
