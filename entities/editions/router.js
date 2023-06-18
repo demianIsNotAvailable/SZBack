@@ -1,12 +1,12 @@
 import  express  from "express";
 import { auth } from "../../core/middlewares.js";
-import { createEdition, listEditions, findEdition, updateEdition } from "./controller.js";
+import { createEdition, listEditions, findEdition, updateEdition, joinEdition } from "./controller.js";
 
 const router = express.Router();
 
 router.post('/', auth("ADMIN"), async (req, res, next) => {
     try {
-        res.json(createEdition(req.body))
+        res.json(await createEdition(req.body))
     } catch(e) {
         next(e)
     }
@@ -14,7 +14,7 @@ router.post('/', auth("ADMIN"), async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        res.json(listEditions(req.query.start, req.query.end, req.query.location))
+        res.json(await listEditions(req.query.start, req.query.end, req.query.location))
     } catch(e) {
         next(e)
     }
@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        res.json(findEdition(req.params.id))
+        res.json(await findEdition(req.params.id))
     } catch(e) {
         next(e)
     }
@@ -38,9 +38,9 @@ router.put('/:id', auth("ADMIN"), async (req, res, next) => {
     }
 })
 
-router.post('/:id', auth, async (req, res, next) => {
+router.post('/:id', auth(), async (req, res, next) => {
     try {
-        res.json(await signUp(req.params,id, req.token.id))
+        res.json(await joinEdition(req.params.id, req.token.id))
     } catch (e) {
         next(e)
     }

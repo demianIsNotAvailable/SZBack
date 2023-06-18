@@ -23,7 +23,7 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use('/events', editionRouter)
-app.use('/', userRouter)
-app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`))  
+app.use('/editions', editionRouter) 
+app.use('/users', userRouter)
+app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`)) 
 

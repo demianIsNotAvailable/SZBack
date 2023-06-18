@@ -13,14 +13,14 @@ export const createEdition = async (data) => {
 
 
 export const listEditions = async (start, end, location) => {
-    const filter = { $and: [{ active: true }] };
+    const filter = { active: true }
  
-    if ( start && !end ) filter.$and.push({ end: { $gte: start } });
-    if ( end && !start ) filter.$and.push({ start: [{ $lte: end }] });
-    if ( start && end ) filter.$and.push({ end: { $gte: start } }, { start: { $lte: end } });
-    if (location) filter.$and.push({location: location})
+    if (start && !end) filter.date = { $gte: start }
+    if (end && !start) filter.date = { $lte: end }
+    if (start && end) filter.date = { $gte: start, $lte: end }
+    if (location) filter.location = location;
 
-    return await Event.find(filter)
+    return await Edition.find(filter)
 }
 
 
@@ -35,22 +35,16 @@ export const updateEdition = async (id, data) => {
 
 
 export const joinEdition = async (editionId, userId) => {
-    const session = await mongoose.startSession();
-    try {
-        const user = await User.findById(userId).session(session)
-        const edition = await Event.findById(editionId).session(session)
+
+        const user = await User.findById(userId).select('events')
+        const edition = await Edition.findById(editionId).select('users')
+
+        if (user.events.includes(edition._id) || edition.users.includes(user._id)) throw new Error ("DUPLICATED_DATA")
 
         user.events.push(edition._id)
         edition.users.push(user._id)
 
-        await Promise.all([user.save(), edition.save()])
-        await session.commitTransaction()
-        session.endSession()
+        return await Promise.all([user.save(), edition.save()])
+        
 
-        return (true)
-    } catch (e) {
-        session.abortTransaction()
-        session.endSession()
-        next(e)
-    }
 }

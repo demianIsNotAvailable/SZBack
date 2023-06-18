@@ -21,7 +21,7 @@ router.post('/login', async (req, res, next)=>{
 }) 
 
 
-router.get('/profile', auth, async (req, res, next) => {
+router.get('/profile', auth(), async (req, res, next) => {
     try {
         res.json(await findUserById(req.token.id))
     } catch (e) {
