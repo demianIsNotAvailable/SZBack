@@ -22,6 +22,7 @@ const corsOptions = {
 
 
 app.use(express.json());
+app.get('/', (req, res)=> res.send('Healthcheck: ok'))
 app.use(cors(corsOptions));
 app.use('/editions', editionRouter) 
 app.use('/users', userRouter)
