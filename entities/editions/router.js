@@ -14,7 +14,7 @@ router.post('/', auth("ADMIN"), async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        res.json(await listEditions(req.query.start, req.query.end, req.query.location))
+        res.json(await listEditions(req.query.start, req.query.end, req.query.location, req.headers))
     } catch(e) {
         next(e)
     }
