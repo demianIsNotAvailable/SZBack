@@ -62,5 +62,6 @@ export const deleteUser = async (id) => {
 
 
 export const listUsersByRole = async (role) => {
-  return await User.find({ role: role })
+  const findRole = role.toString().toUpperCase()
+  return await User.find({ role: findRole })
 }

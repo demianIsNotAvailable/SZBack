@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, deleteUser, listUsers, updateUser, login, findUserById } from './controller.js';
+import { createUser, deleteUser, listUsers, updateUser, login, findUserById, listUsersByRole } from './controller.js';
 import { auth } from '../../core/middlewares.js';
 
 const router = express.Router();
@@ -29,6 +29,8 @@ router.get('/profile', auth(), async (req, res, next) => {
     }
 })
 
+
+
 router.get('/users', auth("USER"), async (req, res, next) => {
     try {
         res.json(await listUsers(req.query.user, req.query.page, req.query.limit));
@@ -38,9 +40,9 @@ router.get('/users', auth("USER"), async (req, res, next) => {
 
 });
 
-router.get('/users/', auth("ADMIN"), async (req, res, next) => {
+router.get('/users/:id', auth("ADMIN"), async (req, res, next) => {
     try {
-        res.json(await listUsersByRole(req.query.role))
+        res.json(await listUsersByRole(req.params.id))
     } catch(e) {
         next(e)
     }

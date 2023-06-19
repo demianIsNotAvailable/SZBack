@@ -22,6 +22,8 @@ const seedEditions = async (count) => {
 
 mongoose.connect(config.DB_URL)
     .then(()=> console.log(`Database up @ ${config.DB_URL}`))
-    .then(() => Edition.deleteMany({}))
+    // .then(() => Edition.deleteMany({}))
     .then(() => seedEditions(10))
     .catch((err) => console.error(`Failed to connect to database`, err))
+
+export default seedEditions

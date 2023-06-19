@@ -6,7 +6,7 @@ import config from "../../core/config.js";
 
 
 export const createEdition = async (data) => {
-    if (!data.location || !data.date || !data.time || !data.description || !data.eventType) {
+    if (!data.location || !data.date || !data.time || !data.description || !data.type) {
         throw new Error("MISSNIG_DATA")
     }
     return Edition.create(data)

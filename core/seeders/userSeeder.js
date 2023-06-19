@@ -23,5 +23,8 @@ const seedUsers = async (count) => {
 
 mongoose.connect(config.DB_URL)
     .then(() => console.log(`Database up @ ${config.DB_URL}`))
+  //.then(() => User.deleteMany({}))
     .then(() => seedUsers(20))
     .catch((err) => console.error(`Failed to connect to database`, err))
+
+export default seedUsers
