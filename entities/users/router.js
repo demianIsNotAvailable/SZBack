@@ -57,7 +57,7 @@ router.get('/:id', auth("USER"), async (req, res, next) => {
 });
 
 
-router.put('/profile', auth, async (req, res, next) => {
+router.put('/profile', auth(), async (req, res, next) => {
     try {
         res.json(await updateUser(req.token.id, req.body))
     } catch(e) {

@@ -1,12 +1,12 @@
 import  express  from "express";
 import { auth } from "../../core/middlewares.js";
-import { createEdition, listEditions, findEdition, updateEdition, joinEdition } from "./controller.js";
+import { upsertEdition, listEditions, findEdition, updateEdition, joinEdition } from "./controller.js";
 
 const router = express.Router();
 
 router.post('/', auth("ADMIN"), async (req, res, next) => {
     try {
-        res.json(await createEdition(req.body))
+        res.json(await upsertEdition(req.body))
     } catch(e) {
         next(e)
     }

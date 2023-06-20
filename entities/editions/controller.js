@@ -5,11 +5,15 @@ import config from "../../core/config.js";
 
 
 
-export const createEdition = async (data) => {
+export const upsertEdition = async (data) => {
     if (!data.location || !data.date || !data.time || !data.description || !data.type) {
         throw new Error("MISSNIG_DATA")
     }
-    return Edition.create(data)
+
+    if(!data.id)
+        return Edition.create(data)
+
+    return Edition.findOneAndUpdate( {_id: data.id}, data, {new: true})
 }
 
 
