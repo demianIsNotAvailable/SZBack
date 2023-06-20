@@ -1,4 +1,4 @@
-# The Survival Zombie APP
+# The Survival Zombie APP - Backend
 
 ## Contenidos
 
@@ -10,7 +10,7 @@
 6. [Contacto](#contacto)
 
 ## Introducción
-¡Bienvenido a **The Survival Zombie App**! El Proyecto Final del [Full Stack Developer](https://geekshubsacademy.com/producto/full-stack-developer/) bootcamp de [GeeksHubs Academy](https://geekshubsacademy.com/).   <br/> <br/>
+¡Bienvenido a **The Survival Zombie App**! El Proyecto Final del [Full Stack Developer](https://geekshubsacademy.com/producto/full-stack-developer/) bootcamp de [GeeksHubs Academy](https://geekshubsacademy.com/). <br/> <br/>
  
 ## Stack Tecnológico
 Para la realización del proyecto se ha usado la pila MERN. Ésta es la parte correspondiente al backend:
@@ -35,7 +35,7 @@ Puedes [descargarte manualmente el .zip](https://github.com/demianIsNotAvailable
 ```bash
 git clone https://github.com/demianIsNotAvailable/SZBack.git     #clonamos el repositorio
 npm i   #descargamos dependencias
-npm run dbSeeder    #poblamos la base de datos (los seeders se pueden configurar manualmente desde /core/seeders/<seeder>)
+npm run dbseed    #poblamos la base de datos (los seeders se pueden configurar manualmente desde /core/seeders/<seeder>)
 npm run start    #lanzamos la app, o
 nodemon    #lanzamos la app en modo desarrollo
 ```

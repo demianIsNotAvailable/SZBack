@@ -10,9 +10,9 @@ import seedUsers from "./userSeeder.js";
 
 
 mongoose.connect(config.DB_URL)
-    .then(() => console.log(`Database up @ ${config.DB_URL}`))
+    .then(() => console.log(`Database up and seeded.`))
   //.then(() => User.deleteMany({}))
   //.then(() => Edition.deleteMany({}))
-    .then(() => seedUsers(50))
-    .then(() => seedEditions(20))
+    .then(() => seedUsers(30))
+    .then(() => seedEditions(15))
     .catch((err) => console.error(`Failed to connect to database`, err))

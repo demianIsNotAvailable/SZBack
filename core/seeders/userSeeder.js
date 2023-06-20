@@ -15,6 +15,7 @@ const seedUsers = async (count) => {
         password: await bcrypt.hash("PassWord12!", config.HASH_ROUNDS),
         city: faker.location.city(),
         province: faker.location.state(),
+        role: faker.helpers.arrayElement(["GUEST", "USER", "VIP"])
       });
       users.push(user)
     }
@@ -22,9 +23,9 @@ const seedUsers = async (count) => {
   }
 
 mongoose.connect(config.DB_URL)
-    .then(() => console.log(`Database up @ ${config.DB_URL}`))
+    .then(() => console.log(`Database seeded with users}`))
   //.then(() => User.deleteMany({}))
-    .then(() => seedUsers(20))
+    .then(() => seedUsers(5))
     .catch((err) => console.error(`Failed to connect to database`, err))
 
 export default seedUsers
