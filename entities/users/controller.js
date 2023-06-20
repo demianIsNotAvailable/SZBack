@@ -33,13 +33,17 @@ export const findUserById = async (id) => {
 export const listUsers = async (username, page = 1, limit = 10) => {
   const reg = new RegExp(username, 'i')
   return User.find({
-      $or: [
-        { name: reg },
-        { lastname: reg },
-        { email: reg },
-        { active: true }
-      ]
-    })
+    $and: [
+      {
+        $or: [
+          { name: reg },
+          { lastname: reg },
+          { email: reg }
+        ]
+      },
+      { active: true }
+    ]
+  })
     .sort({ "lastname": 'asc'})
     .skip((page-1) * limit)
     .limit(limit)
@@ -55,6 +59,7 @@ export const updateUser = async (id, data) => {
   
   return await User.findByIdAndUpdate(id, data, { new: true })
 };
+
 
 export const deleteUser = async (id) => {
   return await User.findByIdAndUpdate(id, { active: false }, { new: true })

@@ -31,7 +31,7 @@ router.get('/profile', auth(), async (req, res, next) => {
 
 
 
-router.get('/users', auth("USER"), async (req, res, next) => {
+router.get('/users/', auth("USER"), async (req, res, next) => {
     try {
         res.json(await listUsers(req.query.user, req.query.page, req.query.limit));
     } catch(e) {
