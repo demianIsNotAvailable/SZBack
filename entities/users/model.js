@@ -39,12 +39,11 @@ export const User = mongoose.model('User', new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  events: {
-    type: Array,
-    default: [],
-    ref: 'Edition',
-    select: false    
-  }
+  events: [{
+    type: String,
+    ref: 'User',
+    select: false
+  }]
 
 }, { versionKey: false, timestamps: true }));
 

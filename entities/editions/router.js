@@ -32,7 +32,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id', auth("ADMIN"), async (req, res, next) => {
     try {
-        res.json(await updateEdition(req.params.id, data))
+        res.json(await updateEdition(req.params.id, req.body))
     } catch(e) {
         next(e)
     }

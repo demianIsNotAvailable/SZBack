@@ -46,7 +46,7 @@ export const findEdition = async (id) => {
 
 
 export const updateEdition = async (id, data) => {
-    return Edition.findOneAndUpdate(id, data)
+    return Edition.findOneAndUpdate({ _id: id}, data)
 }
 
 // ternaria que te apunta al evento si no estás apuntado, y te borra si ya lo estás.
