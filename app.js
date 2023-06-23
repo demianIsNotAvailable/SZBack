@@ -8,7 +8,7 @@ import editionRouter from "./entities/editions/router.js"
 
 const app = express();
 mongoose.connect(config.DB_URL)
-    .then(()=> console.log(`Database up @ ${config.DB_URL}`))
+    .then(()=> console.log(`Database up!`))
     .catch((err) => console.error(`Failed to connect to database`, err))
 
 

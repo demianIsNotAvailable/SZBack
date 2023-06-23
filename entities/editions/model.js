@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 export const Edition = mongoose.model('Edition', new mongoose.Schema({
   location: {
     type: String,
-    required: true
+    required: true,
+      index: {
+        collation: { locale: 'en', strength: 2 },
+    }
   },
   date: {
     type: Date,

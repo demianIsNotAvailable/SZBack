@@ -26,7 +26,7 @@ export const listEditions = async (start = "", end = "", location = "", headers)
         const token = headers.authorization.split(' ')[1];
         try {
             headers.token = Jwt.verify(token, config.SECRET)
-            filter._id = { $in: headers.token.editions }
+            filter._id = { $in: headers.token.events }
         } catch(e){        
             throw new Error(e);
         }
@@ -36,8 +36,9 @@ export const listEditions = async (start = "", end = "", location = "", headers)
     if (start && end) filter.date = { $gte: start, $lte: end }
     if (location) filter.location = location;
 
-    return Edition.find(filter)
+    return Edition.find(filter).collation({ locale: 'en', strength: 2 })
 }
+
 
 
 export const findEdition = async (id) => {
@@ -50,8 +51,8 @@ export const updateEdition = async (id, data) => {
 }
 
 // ternaria que te apunta al evento si no estás apuntado, y te borra si ya lo estás.
-export const joinEdition = async (editionId, userId) => {
-
+export const joinEdition = async (editionId, token) => {
+        const userId = token.id
         const user = await User.findById(userId).select('events')
         const edition = await Edition.findById(editionId).select('users')
 

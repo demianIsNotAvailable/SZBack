@@ -29,6 +29,14 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+router.put('/', auth(), async (req, res, next) => {
+    try {
+        res.json(await joinEdition(req.query.id, req.token))
+    } catch (e) {
+        next(e)
+    }
+})
+
 
 router.put('/:id', auth("ADMIN"), async (req, res, next) => {
     try {
@@ -38,13 +46,7 @@ router.put('/:id', auth("ADMIN"), async (req, res, next) => {
     }
 })
 
-router.post('/:id', auth(), async (req, res, next) => {
-    try {
-        res.json(await joinEdition(req.params.id, req.token.id))
-    } catch (e) {
-        next(e)
-    }
-})
+
 
 
 

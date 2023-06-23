@@ -19,7 +19,7 @@ export const login = async (req) => {
   const user = await User.findOne({ email: req.body.email }).select("+password +events");
   if (!user || !(await bcrypt.compare(req.body.password, user.password)))
     throw new Error("INVALID_CREDENTIALS")
-  const token = Jwt.sign({id: user._id, email: user.email, editions: user.events, role: user.role }, config.SECRET)
+  const token = Jwt.sign({id: user._id, email: user.email, events: user.events, role: user.role }, config.SECRET)
   return {token}
 }
 
