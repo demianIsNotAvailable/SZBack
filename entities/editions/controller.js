@@ -22,19 +22,23 @@ export const upsertEdition = async (data) => {
 export const listEditions = async (start = "", end = "", location = "", headers) => {
     const filter = { active: true }
 
-    if(headers.authorization) {
-        const token = headers.authorization.split(' ')[1];
-        try {
-            headers.token = Jwt.verify(token, config.SECRET)
-            filter._id = { $in: headers.token.events }
-        } catch(e){        
-            throw new Error(e);
-        }
-    }    
+  
     if (start && !end) filter.date = { $gte: start }
     if (end && !start) filter.date = { $lte: end }
     if (start && end) filter.date = { $gte: start, $lte: end }
     if (location) filter.location = location;
+
+    if(headers.authorization) {
+        const token = headers.authorization.split(' ')[1];
+        try {
+            const decodedToken = Jwt.verify(token, config.SECRET)
+            if (decodedToken.role === "ADMIN" || decodedToken.role === "SUPERADMIN") {
+                return Edition.find(filter).select('+users').collation({ locale: 'en', strength: 2 })
+            } 
+        } catch(e){        
+            throw new Error(e);
+        }
+    }  
 
     return Edition.find(filter).collation({ locale: 'en', strength: 2 })
 }

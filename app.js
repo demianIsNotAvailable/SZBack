@@ -4,6 +4,7 @@ import cors from "cors";
 import config from "./core/config.js";
 import userRouter from "./entities/users/router.js"
 import editionRouter from "./entities/editions/router.js"
+import characterRouter from "./entities/characters/router.js"
 
 
 const app = express();
@@ -26,5 +27,6 @@ app.get('/', (req, res)=> res.send('Healthcheck: ok'))
 app.use(cors(corsOptions));
 app.use('/editions', editionRouter) 
 app.use('/users', userRouter)
+app.use('/characters', characterRouter)
 app.listen(config.PORT, () => console.log(`Server listening @ ${config.PORT}`)) 
 
