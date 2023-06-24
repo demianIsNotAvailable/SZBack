@@ -5,11 +5,12 @@ export const Character = mongoose.model('Character',new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
     maxlength: 30
   },
   description: {
     type: String,
-    maxlength: 200
+    maxlength: 500
   },
   faction: {
     type: String,
@@ -18,12 +19,8 @@ export const Character = mongoose.model('Character',new mongoose.Schema({
   player: {
     type: String,
     ref: 'User',
-    required: true
+    required: true,
   },
-  events: [{
-    type: String,
-    ref: 'Edition',
-  }],
   active: {
     type: Boolean,
     default: true,

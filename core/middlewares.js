@@ -9,7 +9,7 @@ import config from './config.js'
 export const auth = (roleRequired = "GUEST") => {
     return (req, res, next) => {        
 
-        if(!req.headers.authorization) return res.status(401).send()
+        if(!req.headers.authorization) return res.status(418).send()
         const token = req.headers.authorization.split(' ')[1];
         
         if(!token) return next(new Error('AUTHENTICATION_REQUIRED'));

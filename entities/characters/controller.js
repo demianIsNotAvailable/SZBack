@@ -1,6 +1,7 @@
 import {Character} from './model.js';
 
 export const createCharacter = async (data, token) => {
+    
     const validatedCharacter = {
         name: data.name,
         description: data.description,
