@@ -25,12 +25,16 @@ export const findCharactersByFactionEvent = async (faction="", event="") => {
 
 
 export const updateCharacter = async (id, data, token) => {
-    data.player = token.id
-
-    return Character.findOneAndUpdate({ _id: id, player: token.id, active: true}, data, {new: true})
-    
+   if (data.player === token.id) return Character.findByIdAndUpdate(id, data, {new: true})
+   throw new Error("UNAUTHORIZED: Not your character.")
 };
 
 export const deleteCharacter = async (id, token) => {
-    return Character.findOneAndUpdate({ _id: id, player: token.id }, { active: false }) 
+    try{
+        return Character.findOneAndUpdate({ _id: id, player: token.id }, { active: false }) 
+    }
+    catch {
+        throw new Error ("UNAUTHORIZED: not your character.")
+    }
+    
 }
