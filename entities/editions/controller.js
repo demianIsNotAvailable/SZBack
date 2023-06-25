@@ -28,12 +28,14 @@ export const listEditions = async (
   limit = "9",
   headers
 ) => {
-  const filter = { active: true };
+  const filter = { $and: [{ active: true }] };
 
-  if (start && !end) filter.date = { $gte: start };
-  if (end && !start) filter.date = { $lte: end };
-  if (start && end) filter.date = { $gte: start, $lte: end };
-  if (location) filter.location = location;
+  if (location) {
+    const locationRegex = new RegExp(location, "i");
+    filter.$and.push({ location: { $regex: locationRegex } });
+  }  if (start && !end) filter.$and.push({ date: { $gte: start } });
+  if (end && !start) filter.$and.push({ date: { $lte: end } });
+  if (start && end) filter.$and.push({ date: { $gte: start } }, { start: { $lte: end } });
 
   const pageNum = Number(page);
   const limitNum = Number(limit);
@@ -47,6 +49,7 @@ export const listEditions = async (
         const events = await Edition.find(filter)
           .select("+users")
           .collation({ locale: "en", strength: 2 })
+          .sort({ date: 1 })
           .skip(skips)
           .limit(limitNum);
         const totalDocuments = await Edition.countDocuments(filter);
@@ -59,13 +62,13 @@ export const listEditions = async (
   } else {
     const events = await Edition.find(filter)
       .collation({ locale: "en", strength: 2 })
+      .sort({ date: 1 })
       .skip(skips)
       .limit(limitNum);
     const totalDocuments = await Edition.countDocuments(filter);
     const totalPages = Math.ceil(totalDocuments / limitNum);
     return { events, totalPages };
   }
-
 };
 
 export const findEdition = async (id) => {
