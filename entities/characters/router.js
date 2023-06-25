@@ -30,6 +30,15 @@ router.get('/', auth("VIP"), async (req, res, next) => {
 });
 
 
+router.get('/:id', auth("USER"), async (req, res, next) => {
+  try {
+    res.json(await getCharacterById(req.params.id, req.token))
+  } catch(e) {
+    next(e)
+  }
+});
+
+
 router.put('/:id', auth("USER"), async (req, res, next) => {
   try {
     res.json(await updateCharacter(req.params.id, req.body, req.token))

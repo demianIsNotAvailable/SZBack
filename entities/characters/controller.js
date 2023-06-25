@@ -15,6 +15,14 @@ export const getMyCharacters = async (token) => {
     return Character.find({ player: token.id, active: true });
 };
 
+
+export const getCharacterById = async (id, token) => {
+    const char = await Character.findById( {_id: id })
+    char.player === token.id
+    ? char
+    : new Error ("UNAUTHORIZED: not your character.")
+}
+
 export const findCharactersByFactionEvent = async (faction="", event="") => {
     const filter = { active: true }
     faction ? filter.faction = faction : null

@@ -38,12 +38,13 @@ export const auth = (roleRequired = "GUEST") => {
 
 export const errorHandler = (err, req, res, next) =>{
     if(err.message === 'FORBIDDEN') return res.status(401).json({"error": err, "message": "Acceso denegado."})
-    if(err.message === 'AUTHENTICATION_REQUIRED') return res.status(403).json({"error": err, "message": "Por favor, inicia"})
+    if(err.message === '"UNAUTHORIZED: not your character."') return res.status(401).json({"error": err, "message": "¡No puedes jugar con el personaje ajeno!"})
+    if(err.message === 'AUTHENTICATION_REQUIRED') return res.status(403).json({"error": err, "message": "Por favor, inicia sesión"})
     if(err.message === 'TOKEN_INVALID') return res.status(403).json({"error": err, "message": 'Token no válido.'})
     if(err.message === 'NOT_FOUND') return res.status(404).json({"error": err, "message": 'Sin resultados.'})
     if(err.message === 'MISSING_DATA') return res.status(422).json({"error": err, "message": "¡Faltan datos!"})
     if(err.message === 'INVALID_PASSWORD') return res.status(422).json({"error": err, "message": "La contraseña debe contener  MAYUS, minus, número, 10-30 caracteres."})
     if(err.message === 'INVALID_CREDENTIALS') return res.status(422).json({"error": err, "message": "Usuario o contraseña incorrectos."})
-    if(err instanceof MongoServerError && err.code === 11000) return res.status(422).json({error: 'DUPLICATE_ENTITY', entities: Object.keys(err.keyPattern)})
+    if(err instanceof MongoServerError && err.code === 11000) return res.status(422).json({"error": err, "message": 'DUPLICATE_ENTITY', entities: Object.keys(err.keyPattern)})
     return res.status(500).json({error: 'SERVER_ERROR', err})
 }
