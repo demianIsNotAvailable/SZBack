@@ -5,7 +5,7 @@ import Jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 export const createUser = async (data) => {
-  const reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,30}$/
+  const reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$/
   if (!data.email || !data.password) throw new Error("MISSING_DATA")
   if (!reg.test(data.password)) throw new Error("INVALID_PASSWORD")
   if (data.role && data.role !== "GUEST") data.role = "GUEST"
