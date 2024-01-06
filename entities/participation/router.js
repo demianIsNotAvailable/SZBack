@@ -37,3 +37,13 @@ router.delete('/', auth("USER"), async (req, res, next) => {
 });
 
 export default router
+
+
+
+
+router.patch('/', async (req,res, next) => {
+  try {
+    res.json({"req": req})
+  } catch(e) {
+    next(e)
+  }})

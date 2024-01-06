@@ -36,6 +36,9 @@ export const auth = (roleRequired = "GUEST") => {
 
 
 
+
+
+
 export const errorHandler = (err, req, res, next) =>{
     if(err.message === 'FORBIDDEN') return res.status(401).json({"error": err, "message": "Acceso denegado."})
     if(err.message === '"UNAUTHORIZED: not your character."') return res.status(401).json({"error": err, "message": "¡No puedes jugar con el personaje ajeno!"})
